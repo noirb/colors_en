@@ -90,7 +90,7 @@
         function textLoadedHandler(data) {
             $( ".slider" ).slider();
 
-            texts = data.split("\n").join("\n").match(/.{1,2500}/g);
+            texts = data.split("\n").join("±").match(/.{1,2500}/g);
             for (var i = 0; i < texts.length; i++) {
                 if (currentPageNum == i) {
                     $(".pages").append("<li class='disabled'><a href='#'>" + i + "</a></ul>");
