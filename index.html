@@ -39,7 +39,7 @@
             "x":"#00004A",
             "y":"#AFC84A",
             "z":"#3F190C"
-			};
+        };
 
         var pages = {
             "a":1,
@@ -76,9 +76,6 @@
         });
 
         function clickOnUploadHandler() {
-
-
-
             $(".pages").html("");
             $.ajax({
                 url:$(".url").val(),
@@ -89,7 +86,6 @@
 
         function textLoadedHandler(data) {
             $( ".slider" ).slider();
-
             texts = data.split("\n").join("±").match(/.{1,2500}/g);
             for (var i = 0; i < texts.length; i++) {
                 if (currentPageNum == i) {
@@ -97,11 +93,9 @@
                     continue;
                 }
                 $(".pages").append("<li><a href='#'>" + i + "</a></ul>");
-
             }
             $(".pages").click(clickOnPageSelector);
             showPage();
-
         }
 
         function clickOnPageSelector(event) {
@@ -115,7 +109,6 @@
                 $('.lead').hide();
                 $('.input-append').hide();
             }
-
             $(".pages").html("");
             for (var i = 0; i < texts.length; i++) {
                 if (currentPageNum == i) {
@@ -123,34 +116,27 @@
                     continue;
                 }
                 $(".pages").append("<li><a href='#'>" + i + "</a></ul>");
-
             }
-
             showPage();
         }
 
         function showPage() {
             $('li').css('background-color', 'white');
             $('li').eq(currentPageNum).css('background-color', 'DeepSkyBlue');
-
             var text = texts[currentPageNum];
-
             result = "";
-
             for (var i = 0; i < text.length; i++) {
                 var letter = text.charAt(i);
+                var is_alpha = charAtArray(letter.toLowerCase(), sma);
 
-                var small_letter = charAtArray(letter, sma);
-                var big_letter = charAtArray(letter, big);
-
-                if (small_letter != -1) {
+                if (is_alpha != -1) {
+                    result += "<div class='glyph-bg' style='color: " + colors[letter.toLowerCase()] + "; background-color: " + colors[letter.toLowerCase()] + "; '>";
                     if (pages[letter] <= currentPageNum) {
-                        result += "<span class='glyph-transperent' style='font-size:18px; background-color: " + colors[letter] + "; '>" + letter + "</span>";
+                        result += "<span class='glyph-transparent'>" + letter + "</span>";
                     } else {
-                        result += "<span class='glyph' style='font-size:18px; font-weight:bold; background-color: " + colors[letter] + "; '>" + letter + "</span>";
+                        result += "<span class='glyph'>" + letter + "</span>";
                     }
-                } else if (big_letter != -1) {
-                    result += "<span class='glyph' style='font-size:22px; font-weight:bold; background-color: " + colors[letter.toLowerCase()] + ";'><span style='opacity:0.5'>" + letter + "</span></span>";
+                    result += "</div>";
                 } else if (letter == "±") {
                     result += "<br/>";
                 } else {
@@ -168,6 +154,7 @@
                 getNextSpaceNum(num + 1);
             }
         }
+
         function charAtArray(char, array) {
             for (var i = 0; i < array.length; i++) {
                 if (char == array[i]) {
@@ -191,52 +178,60 @@
             opacity: 1;
         }
 
-        .glyph {
-            color: rgba(0, 0, 0, 0.4);
-            letter-spacing: 7px;
-
-            opacity: 0.95;
+        .glyph-bg {
+            text-align: center;
+            display: inline-block;
         }
+
+        .glyph {
+            filter: invert(90%);
+            opacity: 0.95;
+            font-size: 16px;
+            margin: 4px;
+        }
+
         .glyph:hover {
             color: white;
-            letter-spacing: 7px;
-
             opacity: 0.95;
         }
 
-        .glyph-transperent {
-            color: rgba(0, 0, 0, 0);
-            letter-spacing: 7px;
-
+        .glyph-transparent {
+            filter: invert(0%);
             opacity: 0.95;
+            font-size: 18px;
+        }
+
+        .glyph-transparent:hover {
+            filter: invert(100%);
         }
 
         .punctuation {
 
         }
 
-        .glyph-transperent:hover {
-            color: rgba(255, 255, 255, 1);
-        }
-
         .content {
-            letter-spacing: 7px;
-            line-height: 24px;
+            line-height: 20px;
             width: 1012px;
+            background-color: #FFF;
+            margin: auto;
+            padding: 20px;
         }
 
         .input-append{
             display: none;
         }
+
         li{
             text-decoration: none;
             list-style-type: none;
             float: left;
             padding: 6px;
         }
+
         ul{
             padding: 0px;
         }
+
         a {
             text-decoration: none;
             font-family: Helvetica, Arial;
@@ -251,6 +246,7 @@
             color: white;
             background-color: black;
         }
+
         .input-append{
             display: none;
             visibility: hidden;
@@ -271,26 +267,20 @@
         }
 
          *{
-            font-family: Helvetica, Arial;
-            font-weight: normal;
+            font-family: Courier, monospace;
+            font-weight: bold;
         }
+
         .main{
-                width: 1012px;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+            width: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #448;
         }
 
         .pagination{
             margin-top: 60px;
-        }
-
-        .author{
-            float: right;
-            font-size: 10px;
-        }
-        .author a{
-            font-size: 10px;
         }
 
     </style>
@@ -310,7 +300,8 @@
 <body>
 <div class="main">
     <h1>Color-Coded Text</h1>
-    <p class="lead"> Ipsum Lipsum <br> (test) 
+    <p class="lead">
+        Ipsum Lipsum <br> (test) 
     </p>
     <!--
         Укажите ссылку на файл и текст из него будет преобразован в последовательность цветов.</p>
@@ -318,12 +309,8 @@
     <div class="input-append">
         <input class="url" type="text" value="infinity.txt">
     </div>
-    
 
     <div class="content"></div>
-    <p></p>
-
-
 
     <div class="pagination pagination-small">
         <ul class="pages"></ul>
