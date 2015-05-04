@@ -86,7 +86,7 @@
 
         function textLoadedHandler(data) {
             $( ".slider" ).slider();
-            texts = data.split("\n").join("±").match(/.{1,2500}/g);
+            texts = data.split("\n").join("±").match(/.{1,2500}±±/g);
             for (var i = 0; i < texts.length; i++) {
                 if (currentPageNum == i) {
                     $(".pages").append("<li class='disabled'><a href='#'>" + i + "</a></ul>");
@@ -137,9 +137,12 @@
                         result += "<span class='glyph'>" + letter + "</span>";
                     }
                     result += "</div>";
+                } else if (letter == "±" && text.charAt(i+1) == "±") {
+                    result += "<br/><br />";
                 } else if (letter == "±") {
-                    result += "<br/>";
-                } else {
+                    result += "<span class='punctuation' > </span>"; // insert empty space for single new lines
+                }
+                else {
                     result += "<span class='punctuation' >" + letter + "</span>";
                 }
             }
