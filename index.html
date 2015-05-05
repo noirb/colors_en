@@ -139,11 +139,11 @@
                     result += "</div>";
                 } else if (letter == "±" && text.charAt(i+1) == "±") {
                     result += "<br/><br />";
-                } else if (letter == "±") {
-                    result += "<span class='punctuation' > </span>"; // insert empty space for single new lines
+                } else if (letter == "±" || letter == " ") {
+                    result += "<span class='glyph-bg' style='color: #fff; background-color: #fff'><span class='punctuation' > &nbsp; </span></span>"; // insert empty space for single new lines & spaces
                 }
                 else {
-                    result += "<span class='punctuation' >" + letter + "</span>";
+                    result += "<span class='glyph-bg' style='color: #fff; background-color: #fff'><span class='glyph' >" + letter + "</span></span>";
                 }
             }
             $(".content").html('');
@@ -184,13 +184,14 @@
         .glyph-bg {
             text-align: center;
             display: inline-block;
+            margin-top: 8px;
         }
 
         .glyph {
             filter: invert(90%);
             opacity: 0.95;
             font-size: 16px;
-            margin: 4px;
+            margin: 2px;
         }
 
         .glyph:hover {
@@ -202,7 +203,7 @@
             filter: invert(0%);
             opacity: 0.95;
             font-size: 16px;
-            margin: 4px;
+            margin: 2px;
         }
 
         .glyph-transparent:hover {
@@ -210,7 +211,8 @@
         }
 
         .punctuation {
-
+            font-size: 16px;
+            margin: 2px;
         }
 
         .content {
@@ -271,7 +273,7 @@
         }
 
          *{
-            font-family: Courier, monospace;
+            font-family: Helvetica, Arial;
             font-weight: bold;
         }
 
